@@ -64,7 +64,7 @@ const CustomTimelineExperience: React.FunctionComponent<
               </Tooltip>
             </div>
             <div className="italic">{poste}</div>
-            <div>{description}</div>
+            <div className="text-justify">{description}</div>
           </TimelineContent>
         </TimelineItem>
       </Timeline>

@@ -2,6 +2,7 @@ import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import App from "./App";
 import { useAppSelector } from "./app/hooks";
+import NotFound from "./containers/noPageAvailable";
 import About from "./containers/section/About/About";
 import Certifications from "./containers/section/Certifications/Certifications";
 import Contacts from "./containers/section/Contacts/Contacts";
@@ -15,6 +16,7 @@ const AllRoutes = () => {
   const path: string = useAppSelector(currentPath);
   return (
     <Routes>
+      <Route path="*" element={<App Container={<NotFound />} />} />
       <Route path="/" element={<Navigate to={path} />} />
       <Route path="/a-propos" element={<App Container={<About />} />} />
       <Route

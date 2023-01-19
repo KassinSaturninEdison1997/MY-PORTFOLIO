@@ -1,44 +1,59 @@
-import { Divider, Tooltip } from "@material-ui/core";
-import React from "react";
-import light from "./../../../assets/light.png";
-import LaunchIcon from "@mui/icons-material/Launch";
+import * as React from "react";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import CardHeader from "@mui/material/CardHeader/CardHeader";
+import Divider from "@mui/material/Divider/Divider";
+import ShareIcon from "@mui/icons-material/Share";
+import UnfoldMoreDoubleIcon from "@mui/icons-material/UnfoldMoreDouble";
+import { Tooltip } from "@mui/material";
 
-interface IRealisationCardProps {
+interface ICustomCardProps {
   index: string;
   title: string;
-  image_url?: string;
+  description?: string;
 }
 
-const RealisationCard: React.FunctionComponent<IRealisationCardProps> = ({
+const RealisationCard: React.FunctionComponent<ICustomCardProps> = ({
   index,
   title,
-  image_url,
+  description,
 }) => {
   return (
-    <div
-      className="shadow-md rounded-md bg-white p-3 flex flex-col"
-      key={index}
-      style={{
-        width: "31%",
-        height: "150px",
-      }}
-    >
-      <div className="flex items-center justify-between">
-        <span>{title}</span>
-        <Tooltip title="Redirection" className="cursor-pointer">
-          <LaunchIcon />
-        </Tooltip>
-      </div>
+    <Card sx={{ maxWidth: 345 }}>
+      <CardHeader
+        title={
+          <div
+            className="flex justify-between items-center"
+            style={{
+              fontSize: "14px",
+              fontFamily: "Inter sans-serif",
+              fontWeight: 500,
+            }}
+          >
+            <span className="font-bold">{title}</span>
+            <div className="flex gap-3 items-center">
+              <span>
+                <Tooltip title="Partager">
+                  <ShareIcon style={{ fontSize: "14px" }} />
+                </Tooltip>
+              </span>
+              <span>
+                <Tooltip title="Pus d'information">
+                  <UnfoldMoreDoubleIcon style={{ fontSize: "14px" }} />
+                </Tooltip>
+              </span>
+            </div>
+          </div>
+        }
+      />
       <Divider />
-      <div className="h-full w-full grow flex justify-center mt-2">
-        <img
-          src={image_url ?? `${light}`}
-          alt={"okey"}
-          style={{ width: "250px", height: "95px" }}
-          className="rounded-md"
-        />
-      </div>
-    </div>
+      <CardContent>
+        <Typography variant="body2" color="text.secondary">
+          {description ?? ""}
+        </Typography>
+      </CardContent>
+    </Card>
   );
 };
 
