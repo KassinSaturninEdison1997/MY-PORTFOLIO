@@ -15,6 +15,8 @@ export interface IBasicDialog extends Omit<DialogProps, "maxWidth"> {
   alignTop?: boolean;
   children: ReactNode;
   borderRadius?: number | string;
+  fullScreen?: boolean;
+  fullWidth?: boolean;
 }
 
 const useStyles = makeStyles({
@@ -60,6 +62,8 @@ const BasicDialog = ({
   minHeight,
   borderRadius,
   size,
+  fullScreen,
+  fullWidth,
   ...props
 }: IBasicDialog) => {
   const classes = useStyles({
@@ -77,6 +81,8 @@ const BasicDialog = ({
       onClose={onClose}
       {...props}
       maxWidth={size}
+      fullScreen={fullScreen}
+      fullWidth={fullWidth}
     >
       {children}
     </Dialog>

@@ -15,7 +15,7 @@ const SecondBox = () => {
     >
       <div
         style={{ marginBottom: "50px", fontSize: "18px" }}
-        className="mr-16 ml-16"
+        className="mr-16 ml-16 mt-10"
       >
         <Quote text={texte} author={"Saturnin Edison Tchola KASSIN"} />
       </div>

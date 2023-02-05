@@ -1,5 +1,4 @@
 import Button from "@mui/material/Button";
-import Divider from "@mui/material/Divider";
 import React from "react";
 import CustomTextField from "../../../components/Custom/Components/CustomTextField/CustomTextField";
 import LaunchIcon from "@mui/icons-material/Launch";
@@ -12,7 +11,7 @@ const Freelancer = () => {
   const dispatch = useAppDispatch();
 
   return (
-    <div className="w-full h-full  p-7">
+    <div className="w-full p-7">
       <h2
         className="flex justify-between items-center"
         style={{
@@ -49,7 +48,7 @@ const Freelancer = () => {
           </span>
         </Link>
       </h2>
-      <div className="w-full h-full bg-white rounded-md shadow-md">
+      <div className="w-full bg-white rounded-md shadow-md p-10">
         <table className="w-full">
           <tr>
             <td className="p-3">
@@ -60,7 +59,7 @@ const Freelancer = () => {
               />
             </td>
           </tr>
-          <Divider />
+          {/* <Divider /> */}
           <tr>
             <td className="p-3">
               <CustomTextField
@@ -70,7 +69,7 @@ const Freelancer = () => {
               />
             </td>
           </tr>
-          <Divider />
+          {/* <Divider /> */}
           <tr>
             <td className="p-3">
               <CustomTextField
@@ -82,7 +81,7 @@ const Freelancer = () => {
               />
             </td>
           </tr>
-          <Divider />
+          {/* <Divider /> */}
           <tr>
             <td className="p-3">
               <CustomTextField

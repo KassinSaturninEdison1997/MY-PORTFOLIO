@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 
-export interface CounterState {
+export interface CategorieState {
   categorie: string | "not-found";
   path: string;
 }
 
-const initialState: CounterState = {
+const initialState: CategorieState = {
   categorie: "a-propos",
   path: "/a-propos"
 };

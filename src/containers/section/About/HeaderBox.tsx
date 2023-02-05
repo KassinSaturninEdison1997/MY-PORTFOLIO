@@ -2,7 +2,10 @@ import { Avatar, Tooltip } from "@mui/material";
 import React from "react";
 import CustomButton from "../../../components/Custom/Components/CustomButton/CustomButton";
 import AddIcon from "../../../components/Custom/Icons/AddIcon";
-
+import { useAppSelector } from "../../../app/hooks";
+import { isOnline } from "../../../features/auth/authSlice";
+import { Link } from "react-router-dom";
+import { currentPath } from "../../../features/categorie/categorieSlice";
 interface IHeaderBoxProps {
   title: string;
   addButton?: boolean;
@@ -11,12 +14,17 @@ interface IHeaderBoxProps {
     hoverTitle: string;
     image: string;
   };
+  onAction?: () => void;
 }
 const HeaderBox: React.FunctionComponent<IHeaderBoxProps> = ({
   image,
   title,
   addButton,
+  onAction,
 }) => {
+  const isonline = useAppSelector(isOnline);
+  const path = useAppSelector(currentPath);
+
   return (
     <header
       className="bg-white space-y-4 p-4 sm:px-8 sm:py-6 lg:p-4 xl:px-8 xl:py-6 rounded-md shadow-md"
@@ -34,15 +42,15 @@ const HeaderBox: React.FunctionComponent<IHeaderBoxProps> = ({
         }}
       >
         <span>{title}</span>
-        {addButton && (
-          <span>
+        {addButton && isonline && (
+          <Link to={`${path}/create`}>
             <CustomButton
               label="New"
               Icon={<AddIcon />}
               withIcon
-              onAction={() => alert("Bonjour")}
+              onAction={onAction}
             />
-          </span>
+          </Link>
         )}
       </span>
       {image && (

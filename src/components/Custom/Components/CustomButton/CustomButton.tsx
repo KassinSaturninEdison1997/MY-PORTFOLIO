@@ -1,5 +1,4 @@
 import React, { ReactNode } from "react";
-import Button from "@mui/material/Button";
 import { makeStyles } from "@material-ui/styles";
 import classNames from "classnames";
 
@@ -22,6 +21,7 @@ interface IButtonProps {
   withIcon?: boolean;
   Icon?: ReactNode;
   onAction?: () => void;
+  disabled?: boolean;
 }
 
 const CustomButton: React.FunctionComponent<IButtonProps> = ({
@@ -29,20 +29,23 @@ const CustomButton: React.FunctionComponent<IButtonProps> = ({
   withIcon,
   Icon,
   onAction,
+  disabled = false,
 }) => {
   const addIcon = withIcon && Icon;
   const classes = useStyles();
   return (
-    <span
+    <button
       className={classNames(
         classes.Button,
-        "group flex items-center rounded-md text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm cursor-pointer"
+        "group flex items-center rounded-md text-white font-medium p-3 shadow-sm cursor-pointer uppercase"
       )}
+      style={{ fontSize: "16px" }}
       onClick={onAction}
+      disabled={disabled}
     >
       {addIcon ? Icon : null}
       {label}
-    </span>
+    </button>
   );
 };
 
