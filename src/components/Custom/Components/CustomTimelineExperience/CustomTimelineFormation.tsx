@@ -1,18 +1,11 @@
 import * as React from "react";
-import Timeline from "@mui/lab/Timeline";
-import TimelineItem from "@mui/lab/TimelineItem";
-import TimelineSeparator from "@mui/lab/TimelineSeparator";
-import TimelineContent from "@mui/lab/TimelineContent";
-import TimelineOppositeContent, {
-  timelineOppositeContentClasses,
-} from "@mui/lab/TimelineOppositeContent";
-import TimelineDot from "@mui/lab/TimelineDot";
 import _ from "lodash";
-import Avatar from "@mui/material/Avatar";
 import ModelTrainingOutlinedIcon from "@mui/icons-material/ModelTrainingOutlined";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import { Divider } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import { Link as RedirectSite } from "@mui/material";
+import Box from "@mui/material/Box";
 
 export interface ITimelineItem {
   id: string;
@@ -21,8 +14,8 @@ export interface ITimelineItem {
   domaine: string;
   ecole: string;
   ecole_url?: string;
-  logo?: React.ReactNode;
-  media?: string[];
+  logo?: string;
+  // media?: string[];
   activites?: string[];
   description: React.ReactNode;
 }
@@ -36,60 +29,52 @@ const CustomTimelineFormation: React.FunctionComponent<
   return (
     <>
       {!_.isEmpty(items) ? (
-        <Timeline
-          position="right"
-          sx={{
-            [`& .${timelineOppositeContentClasses.root}`]: {
-              flex: 0,
-              fontFamily: "Inter, sans-serif",
-              fontSize: "12px",
-            },
-          }}
-        >
-          {_.map(items, (item) => (
-            <TimelineItem key={item.id}>
-              <TimelineOppositeContent
-                sx={{ m: "auto 0" }}
-                align="right"
-                variant="body2"
-                color="text.secondary"
-              >
-                <div className="flex flex-col italic">
-                  <span>{item.period}</span>
-                </div>
-              </TimelineOppositeContent>
-
-              <TimelineSeparator>
-                {/* <TimelineConnector /> */}
-                <TimelineDot>
-                  {item.logo ? (
-                    item.logo
-                  ) : (
-                    <Avatar
-                      alt={item.ecole}
-                      src={""}
-                      sx={{ width: 50, height: 50 }}
-                      className="shadow-md"
-                    />
-                  )}
-                </TimelineDot>
-                {/* <TimelineConnector /> */}
-              </TimelineSeparator>
-
-              <TimelineContent
-                sx={{ py: "12px", px: 2 }}
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                }}
-              >
-                <h1 className="font-bold flex items-center justify-between">
-                  <span className="font-bold">{item.diplome}</span>
+        _.map(items, (item) => (
+          <Box className="w-full flex gap-3 p-3" style={{ width: "70%" }}>
+            {/* IMAGE */}
+            <div style={{ width: "100px" }} className="flex justify-center">
+              <img
+                src={item.logo}
+                alt={item.ecole}
+                style={{ width: 50, height: 50 }}
+                className="bg-cover rounded-md"
+              />
+            </div>
+            {/* PRESENTATION */}
+            <div
+              className="flex flex-col"
+              style={{ width: "calc(100% - 100px)" }}
+            >
+              {item.ecole_url ? (
+                <RedirectSite
+                  href={`https://${item.ecole_url}`}
+                  target={"_blank"}
+                >
+                  <h1
+                    style={{ fontSize: "20px", fontWeight: 500 }}
+                    className="font-bold tracking-wide"
+                  >
+                    {item.ecole}
+                  </h1>
+                </RedirectSite>
+              ) : (
+                <h1
+                  style={{ fontSize: "20px", fontWeight: 500 }}
+                  className="font-bold tracking-wide"
+                >
+                  {item.ecole}
                 </h1>
-                <span className="text-justify">{item.description}</span>
-              </TimelineContent>
-            </TimelineItem>
-          ))}
-        </Timeline>
+              )}
+              <h2 style={{ fontSize: "15px", fontWeight: 400 }}>
+                {item.diplome}
+              </h2>
+              <h3 style={{ fontSize: "10px", fontWeight: 400 }}>
+                {item.period}
+              </h3>
+              <span className="text-justify">{item.description}</span>
+            </div>
+          </Box>
+        ))
       ) : (
         <>
           <div className="justify-between items-center flex gap-5 p-5">

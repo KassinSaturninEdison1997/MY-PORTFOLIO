@@ -5,7 +5,6 @@ import { fetchAllFormation } from "../../../config/actions/FORMATION/formation-a
 import HeaderBox from "../About/HeaderBox";
 import { allFormations } from "../../../features/formation/formationSlice";
 import _ from "lodash";
-import { Avatar } from "@mui/material";
 
 const ListFormation = () => {
   const dispatch = useAppDispatch();
@@ -41,22 +40,23 @@ const ListFormation = () => {
       return {
         id: formation.id!,
         period: `${formation.debut} - ${formation.fin}`,
-        icon: (
-          <Avatar
-            src={
-              formation.ecole_logo && _.isString(formation.ecole_logo)
-                ? formation.ecole_logo
-                : ""
-            }
-            alt={formation.ecole}
-            sx={{ width: 50, height: 50 }}
-            className="bg-transparent"
-          />
-        ),
         diplome: formation.diplome,
         domaine: formation.domaine,
         description: formatDescription(formation?.description ?? ""),
         ecole: formation.ecole,
+        ecole_url: formation.ecole_url,
+        logo:
+          formation.ecole_logo && _.isString(formation.ecole_logo)
+            ? formation.ecole_logo
+            : "",
+        media:
+          _.isArray(formation.media) &&
+          _.every(formation.media, (med: any) => _.isString(med))
+            ? formation.media
+            : [],
+        activites: _.isArray(formation.activites_academique)
+          ? formation.activites_academique
+          : _.split(formation.activites_academique, ","),
       };
     });
 
