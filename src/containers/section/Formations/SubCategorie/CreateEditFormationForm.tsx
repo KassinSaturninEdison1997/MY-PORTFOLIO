@@ -11,6 +11,7 @@ import { saveFormationWithFileTreatment } from "../../../../config/actions/FORMA
 import { Navigate } from "react-router-dom";
 import { useState } from "react";
 import { useAppDispatch } from "../../../../app/hooks";
+import dateFormat from "dateformat";
 
 export interface IFormationForm {
   id?: string;
@@ -122,10 +123,12 @@ const CreateEditFormationForm = () => {
             _.isString(attributes.activites_academique)
               ? _.split(attributes.activites_academique, ",")
               : attributes.activites_academique,
+          debut: dateFormat(attributes.debut, "mmmm yyyy"),
+          fin: dateFormat(attributes.fin, "mmmm yyyy"),
         },
       })
     );
-    // setRedirect(true);
+    setRedirect(true);
   };
 
   if (redirect) {
