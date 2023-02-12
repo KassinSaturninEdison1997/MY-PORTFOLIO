@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 let currentMsIndex: number = 0;
 let lastTimestamp: number = 0;
  
@@ -18,3 +20,15 @@ export function IDSource(): string {
   }
   return prefix + id2;
 }
+
+export const cleanUndefinedKey = (object: any) => {
+  if (!_.isEmpty(_.keys(object))) {
+    _.map(_.keys(object), (cle: string) => {
+      if (cle === "id" || object[cle] === undefined) {
+        delete object[cle];
+      }
+    });
+    return object;
+  }
+  return object;
+};

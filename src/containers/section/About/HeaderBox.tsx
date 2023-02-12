@@ -1,4 +1,4 @@
-import { Avatar, Tooltip } from "@mui/material";
+import { Avatar, Button, Tooltip } from "@mui/material";
 import React from "react";
 import CustomButton from "../../../components/Custom/Components/CustomButton/CustomButton";
 import AddIcon from "../../../components/Custom/Icons/AddIcon";
@@ -28,28 +28,30 @@ const HeaderBox: React.FunctionComponent<IHeaderBoxProps> = ({
   return (
     <header
       className="bg-white space-y-4 p-4 sm:px-8 sm:py-6 lg:p-4 xl:px-8 xl:py-6 rounded-md shadow-md"
-      style={{ height: "100px", background: "#1f2937" }}
+      style={{ height: "100px", background: "#f2f2f2" }}
     >
       <span
         style={{
           fontSize: "40px",
           color: "#fff",
           fontFamily: "Inter, sans-serif",
-          fontWeight: 100,
+          fontWeight: 500,
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
         }}
       >
-        <span>{title}</span>
+        <span style={{ color: "#1f2937" }}>{title}</span>
         {addButton && isonline && (
           <Link to={`${path}/create`}>
-            <CustomButton
-              label="New"
-              Icon={<AddIcon />}
-              withIcon
-              onAction={onAction}
-            />
+            <Button
+              onClick={onAction}
+              style={{ color: "#fff", background: "#1f2937" }}
+              className="flex flex-wrap rounded-md cursor-pointer pl-3 pr-3"
+            >
+              <AddIcon />
+              <span>Nouveau</span>
+            </Button>
           </Link>
         )}
       </span>

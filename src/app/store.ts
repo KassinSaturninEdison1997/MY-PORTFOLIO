@@ -13,19 +13,24 @@ import {
 import categorieReducer from '../features/categorie/categorieSlice';
 import authReducer from '../features/auth/authSlice';
 import formationReducer from "./../features/formation/formationSlice";
+import certificationReducer from "./../features/certification/certificationSlice";
 import notificationReducer from "./../features/notifications/notificationSlices";
 import { persistConfig } from './persist';
+import realisationReducer from "./../features/realisations/realisationSlice";
  
 //const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const rootReducer = combineReducers({
     categorie: categorieReducer,
+    realisation: realisationReducer,
     auth: authReducer,
     formation: formationReducer,
-    notification: notificationReducer
+    notification: notificationReducer,
+    certification: certificationReducer
 });
 const persistedReducer = persistReducer<RootState>(persistConfig, rootReducer);
 const store = configureStore({
   reducer: persistedReducer,
+  devTools: process.env.REACT_APP_ENV !== 'production',
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {

@@ -1,17 +1,34 @@
 import React from "react";
 import RealisationCard from "./RealisationCard";
+import { useAppSelector } from "../../../app/hooks";
+import { allRealisations } from "../../../features/realisations/realisationSlice";
+import _ from "lodash";
+import BlockIcon from "@mui/icons-material/Block";
 
 const RealisationBox = () => {
+  const allRealisationsSelector = useAppSelector(allRealisations);
+
   return (
-    <div className="w-full h-full grid grid-cols-4 gap-4 mt-7">
-      <RealisationCard index="un" title="Titre 1" description="Description" />
-      <RealisationCard index="deux" title="Titre 2" />
-      <RealisationCard index="trois" title="Titre 3" />
-      <RealisationCard index="quatre" title="Titre 4" />
-      <RealisationCard index="cinq" title="Titre 5" />
-      <RealisationCard index="six" title="Titre 6" />
-      <RealisationCard index="sept" title="Titre 7" />
-      <RealisationCard index="huit" title="Titre 8" />
+    <div className="w-full h-full grid grid-cols-3 gap-3 mt-5">
+      {!_.isEmpty(allRealisationsSelector) ? (
+        _.map(allRealisationsSelector, (realo) => (
+          <RealisationCard
+            key={realo.id}
+            title={realo.title}
+            description={realo.description}
+            lien={realo.lien}
+          />
+        ))
+      ) : (
+        <div className="flex flex-col gap-3 p-5">
+          <span>
+            <BlockIcon
+              style={{ fontSize: "70px", color: "grey", fontWeight: 300 }}
+            />
+          </span>
+          <span>Aucune réalisation faites encore</span>
+        </div>
+      )}
     </div>
   );
 };

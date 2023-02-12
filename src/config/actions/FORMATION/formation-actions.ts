@@ -12,19 +12,7 @@ import {
 } from "../../../features/formation/formationSlice";
 import _ from "lodash";
 import { addNotification } from "../../../features/notifications/notificationSlices";
-import { IDSource } from "../../../utils/utils";
-
-const cleanUndefinedKey = (object: any) => {
-  if (!_.isEmpty(_.keys(object))) {
-    _.map(_.keys(object), (cle: string) => {
-      if (cle === "id" || object[cle] === undefined) {
-        delete object[cle];
-      }
-    });
-    return object;
-  }
-  return object;
-};
+import { IDSource, cleanUndefinedKey } from "../../../utils/utils";
 
 export const saveFormationWithFileTreatment = createAsyncThunk(
   "formation/addFormation",

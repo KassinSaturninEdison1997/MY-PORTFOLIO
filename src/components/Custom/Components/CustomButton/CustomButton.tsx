@@ -1,6 +1,8 @@
 import React, { ReactNode } from "react";
 import { makeStyles } from "@material-ui/styles";
 import classNames from "classnames";
+import { ButtonProps } from "@mui/material/Button";
+import { Button } from "@material-ui/core";
 
 const useStyles = makeStyles({
   Button: {
@@ -16,12 +18,11 @@ const useStyles = makeStyles({
   },
 });
 
-interface IButtonProps {
+interface IButtonProps extends ButtonProps {
   label: string;
   withIcon?: boolean;
   Icon?: ReactNode;
   onAction?: () => void;
-  disabled?: boolean;
 }
 
 const CustomButton: React.FunctionComponent<IButtonProps> = ({
@@ -30,11 +31,12 @@ const CustomButton: React.FunctionComponent<IButtonProps> = ({
   Icon,
   onAction,
   disabled = false,
+  fullWidth,
 }) => {
   const addIcon = withIcon && Icon;
   const classes = useStyles();
   return (
-    <button
+    <Button
       className={classNames(
         classes.Button,
         "group flex items-center rounded-md text-white font-medium p-3 shadow-sm cursor-pointer uppercase"
@@ -42,10 +44,11 @@ const CustomButton: React.FunctionComponent<IButtonProps> = ({
       style={{ fontSize: "16px" }}
       onClick={onAction}
       disabled={disabled}
+      fullWidth={fullWidth}
     >
       {addIcon ? Icon : null}
       {label}
-    </button>
+    </Button>
   );
 };
 
