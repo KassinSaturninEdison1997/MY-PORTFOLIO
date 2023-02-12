@@ -1,11 +1,15 @@
 import * as React from "react";
 import _ from "lodash";
 import ModelTrainingOutlinedIcon from "@mui/icons-material/ModelTrainingOutlined";
-import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import { Divider } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import { Link as RedirectSite } from "@mui/material";
+import { Button, Link as RedirectSite, Tooltip } from "@mui/material";
 import Box from "@mui/material/Box";
+import ReadMoreOutlinedIcon from "@mui/icons-material/ReadMoreOutlined";
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
+import { isOnline } from "../../../../features/auth/authSlice";
+import { getFormationSelected } from "../../../../features/formation/formationSlice";
+import RedirectToNewForm from "./RedirectToNewForm";
 
 export interface ITimelineItem {
   id: string;
@@ -26,52 +30,100 @@ interface ICustomTimelineFormation {
 const CustomTimelineFormation: React.FunctionComponent<
   ICustomTimelineFormation
 > = ({ items }) => {
+  const isonline = useAppSelector(isOnline);
+  const dispatch = useAppDispatch();
   return (
-    <>
+    <Box className=" grid grid-cols-3 gap-3">
       {!_.isEmpty(items) ? (
         _.map(items, (item) => (
-          <Box className="w-full flex gap-3 p-3" style={{ width: "70%" }}>
+          <Box
+            className="flex gap-3 bg-slate-50 rounded-xl pb-3 pt-5 mt-4"
+            style={{
+              borderTop: "10px solid #1f2937",
+              width: "400px",
+            }}
+          >
             {/* IMAGE */}
-            <div style={{ width: "100px" }} className="flex justify-center">
+            <div
+              style={{ width: "100px" }}
+              className="flex flex-col justify-center items-center gap-3"
+            >
               <img
                 src={item.logo}
                 alt={item.ecole}
-                style={{ width: 50, height: 50 }}
+                style={{ width: 70, height: 70 }}
                 className="bg-cover rounded-md"
               />
             </div>
             {/* PRESENTATION */}
-            <div
-              className="flex flex-col"
-              style={{ width: "calc(100% - 100px)" }}
-            >
+            <div className="flex flex-col">
               {item.ecole_url ? (
-                <RedirectSite
-                  href={`https://${item.ecole_url}`}
-                  target={"_blank"}
-                >
+                <Tooltip title={item.ecole}>
+                  <RedirectSite
+                    href={`https://${item.ecole_url}`}
+                    target={"_blank"}
+                    style={{
+                      color: "#1f2937",
+                      textDecoration: "none",
+                    }}
+                  >
+                    <h1
+                      style={{
+                        fontSize: "30px",
+                        fontWeight: 500,
+                        fontFamily: "Kanit",
+                        textOverflow: "ellipsis",
+                        overflow: "hidden",
+                        width: "300px",
+                        whiteSpace: "nowrap",
+                      }}
+                      className="font-bold tracking-wide"
+                    >
+                      {item.ecole}
+                    </h1>
+                  </RedirectSite>
+                </Tooltip>
+              ) : (
+                <Tooltip title={item.ecole}>
                   <h1
-                    style={{ fontSize: "20px", fontWeight: 500 }}
+                    style={{
+                      fontSize: "30px",
+                      fontWeight: 500,
+                      textOverflow: "ellipsis",
+                      overflow: "hidden",
+                      width: "100%",
+                      whiteSpace: "nowrap",
+                    }}
                     className="font-bold tracking-wide"
                   >
                     {item.ecole}
                   </h1>
-                </RedirectSite>
-              ) : (
-                <h1
-                  style={{ fontSize: "20px", fontWeight: 500 }}
-                  className="font-bold tracking-wide"
-                >
-                  {item.ecole}
-                </h1>
+                </Tooltip>
               )}
-              <h2 style={{ fontSize: "15px", fontWeight: 400 }}>
+              <h2 style={{ fontSize: "20px", fontWeight: 400 }}>
                 {item.diplome}
               </h2>
-              <h3 style={{ fontSize: "10px", fontWeight: 400 }}>
-                {item.period}
+              <h3
+                style={{ fontSize: "10px", fontWeight: 400 }}
+                className="flex items-center justify-between"
+              >
+                <span>{item.period}</span>
+                <Link to={`${item.id}`}>
+                  <Button
+                    style={{ color: "#1f2937", fontSize: "10px" }}
+                    onClick={() =>
+                      dispatch(
+                        getFormationSelected({
+                          id: item.id,
+                        })
+                      )
+                    }
+                  >
+                    <ReadMoreOutlinedIcon />
+                    <span>MORE</span>
+                  </Button>
+                </Link>
               </h3>
-              <span className="text-justify">{item.description}</span>
             </div>
           </Box>
         ))
@@ -87,18 +139,15 @@ const CustomTimelineFormation: React.FunctionComponent<
               </span>
             </span>
 
-            <Link to={`/formations/create`}>
-              <span className="border-dashed flex items-center p-10  border-4 rounded-sm ">
-                <AddOutlinedIcon
-                  style={{ fontSize: 70, color: "grey", fontWeight: 500 }}
-                />
-              </span>
-            </Link>
+            <RedirectToNewForm path={`/formations/create`} />
           </div>
           <Divider />
         </>
       )}
-    </>
+      {!_.isEmpty(items) && isonline && (
+        <RedirectToNewForm path={`/formations/create`} />
+      )}
+    </Box>
   );
 };
 

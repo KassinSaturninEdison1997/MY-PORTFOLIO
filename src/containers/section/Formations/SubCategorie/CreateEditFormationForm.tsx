@@ -8,10 +8,11 @@ import { IValidateForm, useForm } from "../../../../hooks/useForm";
 import _ from "lodash";
 import UploadOutlinedIcon from "@mui/icons-material/UploadOutlined";
 import { saveFormationWithFileTreatment } from "../../../../config/actions/FORMATION/formation-actions";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useState } from "react";
 import { useAppDispatch } from "../../../../app/hooks";
 import dateFormat from "dateformat";
+import Button from "@mui/material/Button";
 
 export interface IFormationForm {
   id?: string;
@@ -67,7 +68,7 @@ const validateFormationForm: IValidateForm<IFormationForm> = ({
   return err;
 };
 
-function compareDate(date1: string, date2: string) {
+export function compareDate(date1: string, date2: string) {
   let d1 = new Date(date1);
   let d2 = new Date(date2);
 
@@ -143,15 +144,21 @@ const CreateEditFormationForm = () => {
       {/* HEADER + BUTTON*/}
       <span className="flex items-center justify-between">
         <FormTitle title="Ajouter une Formation" />
-        <CustomButton
-          label="Ajouter"
-          onAction={
-            !_.isEmpty(error)
-              ? () => alert("Erreur sur DIPLOME/INSTITUT")
-              : handleSave
-          }
-          disabled={!_.isEmpty(error)}
-        />
+
+        <span className="flex items-center gap-3">
+          <Link to="/formations">
+            <Button>Annuler</Button>
+          </Link>
+          <CustomButton
+            label="Ajouter"
+            onAction={
+              !_.isEmpty(error)
+                ? () => alert("Erreur sur DIPLOME/INSTITUT")
+                : handleSave
+            }
+            disabled={!_.isEmpty(error)}
+          />
+        </span>
       </span>
 
       <div className="w-full flex flex-col gap-3 px-10">

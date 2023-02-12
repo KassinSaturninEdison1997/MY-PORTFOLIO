@@ -6,6 +6,10 @@ import HeaderBox from "../About/HeaderBox";
 import { allFormations } from "../../../features/formation/formationSlice";
 import _ from "lodash";
 
+// const ZoomableContent = ({ children, zoomLevel }: any) => {
+//   return <div style={{ transform: `scale(${zoomLevel})` }}>{children}</div>;
+// };
+
 const ListFormation = () => {
   const dispatch = useAppDispatch();
 
@@ -66,7 +70,8 @@ const ListFormation = () => {
   return (
     <section className="flex flex-col gap-2 h-full">
       <HeaderBox title={"Formations"} addButton />
-      <div className="bg-white space-y-4 p-4 sm:px-8 sm:py-6 lg:p-4 xl:px-8 xl:py-6 shadow-md rounded-md h-full">
+      <div /*className="bg-white space-y-4 p-4 sm:px-8 sm:py-6 lg:p-4 xl:px-8 xl:py-6 shadow-md rounded-md h-full"*/
+      >
         <CustomTimelineFormation items={formatData()} />
       </div>
     </section>

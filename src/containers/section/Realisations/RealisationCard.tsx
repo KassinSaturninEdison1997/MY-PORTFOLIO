@@ -4,21 +4,47 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import CardHeader from "@mui/material/CardHeader/CardHeader";
 import Divider from "@mui/material/Divider/Divider";
-import ShareIcon from "@mui/icons-material/Share";
 import UnfoldMoreDoubleIcon from "@mui/icons-material/UnfoldMoreDouble";
 import { Tooltip } from "@mui/material";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import { Snackbar } from "@material-ui/core";
+import { Alert } from "@mui/lab";
 
 interface ICustomCardProps {
-  index: string;
   title: string;
   description?: string;
+  lien?: string;
 }
 
 const RealisationCard: React.FunctionComponent<ICustomCardProps> = ({
-  index,
   title,
   description,
+  lien,
 }) => {
+  const [openSnackbar, setOpenSnackbar] = React.useState({
+    open: false,
+    error: false,
+    message: "",
+  });
+
+  async function handleCopyClick(txte: string) {
+    try {
+      await navigator.clipboard.writeText(txte);
+      setOpenSnackbar({
+        open: true,
+        error: false,
+        message: "Lien copy avec succes",
+      });
+    } catch (err) {
+      console.error("Failed to copy text: ", err);
+      setOpenSnackbar({
+        open: true,
+        error: true,
+        message: "Echec de copie",
+      });
+    }
+  }
+
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardHeader
@@ -33,11 +59,13 @@ const RealisationCard: React.FunctionComponent<ICustomCardProps> = ({
           >
             <span className="font-bold">{title}</span>
             <div className="flex gap-3 items-center">
-              <span>
-                <Tooltip title="Partager">
-                  <ShareIcon style={{ fontSize: "14px" }} />
-                </Tooltip>
-              </span>
+              {lien && (
+                <span onClick={() => handleCopyClick(lien)}>
+                  <Tooltip title="Partager">
+                    <ContentCopyIcon style={{ fontSize: "14px" }} />
+                  </Tooltip>
+                </span>
+              )}
               <span>
                 <Tooltip title="Pus d'information">
                   <UnfoldMoreDoubleIcon style={{ fontSize: "14px" }} />
@@ -53,6 +81,33 @@ const RealisationCard: React.FunctionComponent<ICustomCardProps> = ({
           {description ?? ""}
         </Typography>
       </CardContent>
+
+      <Snackbar
+        open={openSnackbar.open}
+        autoHideDuration={6000}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        onClose={() =>
+          setOpenSnackbar({
+            open: false,
+            message: "",
+            error: false,
+          })
+        }
+      >
+        <Alert
+          onClose={() =>
+            setOpenSnackbar({
+              open: false,
+              message: "",
+              error: false,
+            })
+          }
+          severity={openSnackbar.error ? "error" : "success"}
+          sx={{ width: "100%" }}
+        >
+          {openSnackbar.message}
+        </Alert>
+      </Snackbar>
     </Card>
   );
 };
